@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pingCheck = void 0;
-const pingCheck = (req, res) => {
-    return res.status(200).json({ message: "pong" });
+const pingCheck = (res) => {
+    return res.status(200).json({
+        message: "sanskar singh"
+    });
 };
-exports.pingCheck = pingCheck;
+exports.default = {
+    pingCheck: pingCheck,
+};

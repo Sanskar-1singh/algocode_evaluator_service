@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
 
-export const pingCheck = (req: Request, res: Response) => {
-  return res.status(200).json({ message: "pong" });
+ const pingCheck = ( res: Response)=> {
+    return res.status(200).json({
+        message: "sanskar singh"
+    });
 };
+
+export default{
+    pingCheck:pingCheck,
+}
