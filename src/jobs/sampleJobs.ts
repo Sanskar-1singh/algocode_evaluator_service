@@ -1,6 +1,6 @@
 import { Job } from "bullmq";
 
-import { IJob } from "../types/bullMqjobDefination";
+import  IJob  from "../types/bullMqjobDefination";
 
 export default class sampleJobs implements IJob{
         name:string;
