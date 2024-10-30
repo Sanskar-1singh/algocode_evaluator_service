@@ -7,7 +7,8 @@ const ioredis_1 = require("ioredis");
 const serverConfig_1 = __importDefault(require("./serverConfig"));
 const redisConfig = {
     port: serverConfig_1.default.REDIS_PORT,
-    host: serverConfig_1.default.REDIS_HOST
+    host: serverConfig_1.default.REDIS_HOST,
+    maxRetriesPerRequest: null
 };
 const redisConnection = new ioredis_1.Redis(redisConfig);
 exports.default = redisConnection;
