@@ -6,5 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.default = {
-    PORT: process.env.PORT || 3000
+    PORT: process.env.PORT || 3000,
+    REDIS_PORT: parseInt(process.env.REDIS_PORT || "6379", 10),
+    REDIS_HOST: process.env.REDIS_HOST || '127.0.0.1'
 };

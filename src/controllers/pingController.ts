@@ -1,11 +1,8 @@
-import { Request, Response } from "express";
+// In pingController.ts
+import { Request, Response,NextFunction } from 'express';
 
- const pingCheck = ( res: Response)=> {
-    return res.status(200).json({
-        message: "sanskar singh"
-    });
+export const pingCheck = (__: Request, res: Response, _: NextFunction)=> {
+    res.json({ message: "OK DONE" });
 };
 
-export default{
-    pingCheck:pingCheck,
-}
+
