@@ -1,11 +1,8 @@
-import express, { Router,NextFunction,Response,Request,RequestHandler } from "express";
+import express from 'express';
+import { addSubmission } from "../../controllers/submissionController";
+import { createSubmmissionZodSchema } from '../../dtos/CreateSubmissionDtos';
+import { validate } from '../../validators/createSubmissionValidator';
+const submissionRouter=express.Router();
+submissionRouter.post('/',  validate(createSubmmissionZodSchema), addSubmission);
 
-import { addSubmission  } from "../../controllers/submissionController";
-import { CreateSubmissionDto } from "../../dtos/CreateSubmissionDtos";
-
-
-const submissionRouter :Router= express.Router();
-
-submissionRouter.post('/', addSubmission);
-
-export default submissionRouter;
+export default  submissionRouter;
