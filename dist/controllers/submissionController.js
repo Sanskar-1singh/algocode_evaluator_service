@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addSubmission = void 0;
-const addSubmission = (req, res) => {
+const addSubmission = (req, res, __) => {
     const submissionDto = req.body;
-    return res.status(201).json({
+    res.status(201).json({
         success: true,
         error: {},
         message: "Successfully collected the submission",

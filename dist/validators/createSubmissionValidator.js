@@ -8,7 +8,7 @@ const validate = (schema) => (req, res, next) => {
     }
     catch (error) {
         console.log(error);
-        return res.status(400).json({
+        res.status(400).json({
             success: false,
             message: "invalid request params recieved",
             data: {},

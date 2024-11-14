@@ -4,6 +4,7 @@ import apiRouter from './routes/index';
 import samplequeueProducer from './producers/samplequeueProducer';
 import SampleWorker from './workers/sampleWorker';
 import bodyParser from 'body-parser';
+import runPython from './containers/runPythonContainer';
 
 const app = express();
 
@@ -16,23 +17,17 @@ app.use('/api', apiRouter);
 app.listen(serverConfig.PORT, () => {
     console.log(`Server started at port ${serverConfig.PORT}`);
     
+
+    SampleWorker('sampleQueue');
+    const code = `x = input()
+print("value of x is ",x)
+y=input()
+print("value of y is",y)
+    `;
+
+    const val=`100 
+200`;
+    runPython(code,val);
+
+    
 });
-SampleWorker('samplequeue')
-    samplequeueProducer('sampleJobs',{
-        name:"sanket",
-        company:"microsoft",
-        position:"sde 2",
-        location:"BLR"
-    },2);
-    samplequeueProducer('sampleJobs',{
-        name:"sanskar",
-        company:"microsoft",
-        position:"sde 2",
-        location:"BLR"
-    },3);
-    samplequeueProducer('sampleJobs',{
-        name:"sarthak",
-        company:"microsoft",
-        position:"sde 2",
-        location:"BLR"
-    },1);

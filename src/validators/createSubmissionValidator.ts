@@ -9,7 +9,7 @@ export const validate=(schema:ZodSchema<any>)=>(req:Request,res:Response,next:Ne
             next(); 
         } catch (error) {
             console.log(error);
-            return res.status(400).json({
+             res.status(400).json({
                 success:false,
                 message:"invalid request params recieved",
                 data:{},
