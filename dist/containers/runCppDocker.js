@@ -15,22 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const containerFactory_1 = __importDefault(require("./containerFactory"));
 const constant_1 = require("../utils/constant");
 const dockerHelper_1 = __importDefault(require("./dockerHelper"));
-const pullContainer_1 = __importDefault(require("./pullContainer"));
-function runPython(code, inputTestcase) {
+function runCpp(code, inputTestcase) {
     return __awaiter(this, void 0, void 0, function* () {
         const rawlogBuffer = [];
         console.log('intialising docker container');
-        //const pythonDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
-        yield (0, pullContainer_1.default)(constant_1.PYTHON_IMAGE);
-        const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > test.py && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | python3 test.py`;
-        const pythonDockerContainer = yield (0, containerFactory_1.default)(constant_1.PYTHON_IMAGE, [
+        //const JavaDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
+        const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > main.cpp  && g++ main.cpp -o main && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | stdbuf -oL -eL ./main`;
+        const CppDockerContainer = yield (0, containerFactory_1.default)(constant_1.CPP_IMAGE, [
             '/bin/sh',
             '-c',
             runCommand
         ]);
-        yield pythonDockerContainer.start();
+        yield CppDockerContainer.start();
         console.log('started conatiner');
-        const loggerStream = yield pythonDockerContainer.logs({
+        const loggerStream = yield CppDockerContainer.logs({
             stdout: true,
             stderr: true,
             timestamps: false,
@@ -50,7 +48,7 @@ function runPython(code, inputTestcase) {
                 res(dockerHelper_1.default);
             });
         });
-        yield pythonDockerContainer.remove();
+        yield CppDockerContainer.remove();
     });
 }
-exports.default = runPython;
+exports.default = runCpp;

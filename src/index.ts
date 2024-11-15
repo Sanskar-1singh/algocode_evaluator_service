@@ -5,6 +5,8 @@ import samplequeueProducer from './producers/samplequeueProducer';
 import SampleWorker from './workers/sampleWorker';
 import bodyParser from 'body-parser';
 import runPython from './containers/runPythonContainer';
+import runJava from './containers/runJavaDocker';
+import runCpp from './containers/runCppDocker';
 
 const app = express();
 
@@ -19,15 +21,22 @@ app.listen(serverConfig.PORT, () => {
     
 
     SampleWorker('sampleQueue');
-    const code = `x = input()
-print("value of x is ",x)
-y=input()
-print("value of y is",y)
-    `;
+    const code = `
+    #include<iostream>
+    using namespace std;
+    int main(){
+      int x;
+      cin>>x;
+      for(int i=0;i<x;i++){
+      cout<<i<<" ";
+      }
+      cout<<endl;
+      return 0;
+    }
+     `;
 
-    const val=`100 
-200`;
-    runPython(code,val);
+    const val=`10`;
+    runCpp(code,val);
 
     
 });

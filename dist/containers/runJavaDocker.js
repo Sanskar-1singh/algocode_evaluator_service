@@ -16,21 +16,21 @@ const containerFactory_1 = __importDefault(require("./containerFactory"));
 const constant_1 = require("../utils/constant");
 const dockerHelper_1 = __importDefault(require("./dockerHelper"));
 const pullContainer_1 = __importDefault(require("./pullContainer"));
-function runPython(code, inputTestcase) {
+function runJava(code, inputTestcase) {
     return __awaiter(this, void 0, void 0, function* () {
         const rawlogBuffer = [];
         console.log('intialising docker container');
-        //const pythonDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
-        yield (0, pullContainer_1.default)(constant_1.PYTHON_IMAGE);
-        const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > test.py && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | python3 test.py`;
-        const pythonDockerContainer = yield (0, containerFactory_1.default)(constant_1.PYTHON_IMAGE, [
+        //const JavaDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
+        yield (0, pullContainer_1.default)(constant_1.JAVA_IMAGE);
+        const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > Main.java && javac Main.java && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | java Main`;
+        const JavaDockerContainer = yield (0, containerFactory_1.default)(constant_1.JAVA_IMAGE, [
             '/bin/sh',
             '-c',
             runCommand
         ]);
-        yield pythonDockerContainer.start();
+        yield JavaDockerContainer.start();
         console.log('started conatiner');
-        const loggerStream = yield pythonDockerContainer.logs({
+        const loggerStream = yield JavaDockerContainer.logs({
             stdout: true,
             stderr: true,
             timestamps: false,
@@ -50,7 +50,7 @@ function runPython(code, inputTestcase) {
                 res(dockerHelper_1.default);
             });
         });
-        yield pythonDockerContainer.remove();
+        yield JavaDockerContainer.remove();
     });
 }
-exports.default = runPython;
+exports.default = runJava;
