@@ -15,11 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const containerFactory_1 = __importDefault(require("./containerFactory"));
 const constant_1 = require("../utils/constant");
 const dockerHelper_1 = __importDefault(require("./dockerHelper"));
+const pullContainer_1 = __importDefault(require("./pullContainer"));
 function runCpp(code, inputTestcase) {
     return __awaiter(this, void 0, void 0, function* () {
         const rawlogBuffer = [];
         console.log('intialising docker container');
         //const JavaDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
+        yield (0, pullContainer_1.default)(constant_1.CPP_IMAGE);
         const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > main.cpp  && g++ main.cpp -o main && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | stdbuf -oL -eL ./main`;
         const CppDockerContainer = yield (0, containerFactory_1.default)(constant_1.CPP_IMAGE, [
             '/bin/sh',
@@ -38,17 +40,18 @@ function runCpp(code, inputTestcase) {
         loggerStream.on('data', (chunk) => {
             rawlogBuffer.push(chunk);
         });
-        yield new Promise((res) => {
+        const response = yield new Promise((res) => {
             loggerStream.on('end', () => {
                 console.log(rawlogBuffer);
                 const completeBuffer = Buffer.concat(rawlogBuffer);
                 const decodedStream = (0, dockerHelper_1.default)(completeBuffer);
                 console.log(decodedStream);
                 console.log(decodedStream.stdout);
-                res(dockerHelper_1.default);
+                res(decodedStream);
             });
         });
         yield CppDockerContainer.remove();
+        return response;
     });
 }
 exports.default = runCpp;

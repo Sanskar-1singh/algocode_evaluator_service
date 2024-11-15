@@ -8,7 +8,9 @@ const serverConfig_1 = __importDefault(require("./config/serverConfig"));
 const index_1 = __importDefault(require("./routes/index"));
 const sampleWorker_1 = __importDefault(require("./workers/sampleWorker"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const runCppDocker_1 = __importDefault(require("./containers/runCppDocker"));
+const SubmissionWorker_1 = __importDefault(require("./workers/SubmissionWorker"));
+const constant_1 = require("./utils/constant");
+const SubmissionQueueProducers_1 = __importDefault(require("./producers/SubmissionQueueProducers"));
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.urlencoded());
 app.use(body_parser_1.default.json());
@@ -31,5 +33,12 @@ app.listen(serverConfig_1.default.PORT, () => {
     }
      `;
     const val = `10`;
-    (0, runCppDocker_1.default)(code, val);
+    (0, SubmissionWorker_1.default)(constant_1.submission_queue);
+    (0, SubmissionQueueProducers_1.default)({ "1234": {
+            language: "CPP",
+            val,
+            code,
+        } });
+    // SubmissionWorker(submission_queue); 
+    //runCpp(code,val);
 });

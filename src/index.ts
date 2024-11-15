@@ -7,7 +7,9 @@ import bodyParser from 'body-parser';
 import runPython from './containers/runPythonContainer';
 import runJava from './containers/runJavaDocker';
 import runCpp from './containers/runCppDocker';
-
+import SubmissionWorker from './workers/SubmissionWorker';
+import { submission_queue } from './utils/constant';
+import SubmissionQueueProducers from './producers/SubmissionQueueProducers';
 const app = express();
 
 app.use(bodyParser.urlencoded());
@@ -36,7 +38,16 @@ app.listen(serverConfig.PORT, () => {
      `;
 
     const val=`10`;
-    runCpp(code,val);
+    SubmissionWorker(submission_queue);
+    
+
+    SubmissionQueueProducers({"1234":{
+          language:"CPP",
+          val,
+          code,
+    }});
+   // SubmissionWorker(submission_queue); 
+    //runCpp(code,val);
 
     
 });

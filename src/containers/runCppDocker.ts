@@ -4,12 +4,13 @@ import createContainer from './containerFactory';
 import { TestCases } from '../types/testCases';
 import { CPP_IMAGE } from '../utils/constant';
 import decodeDockerStream from './dockerHelper';
+import pullImage from './pullContainer';
 async function runCpp(code:string,inputTestcase:string){
   
   const rawlogBuffer:any[]=[];
     console.log('intialising docker container');
        //const JavaDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
-
+         await pullImage(CPP_IMAGE);
        const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > main.cpp  && g++ main.cpp -o main && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | stdbuf -oL -eL ./main`;
 
        const CppDockerContainer=await createContainer(CPP_IMAGE,[
@@ -33,18 +34,19 @@ async function runCpp(code:string,inputTestcase:string){
             rawlogBuffer.push(chunk);
         })
 
-        await new Promise((res)=>{
+      const response= await new Promise((res)=>{
             loggerStream.on('end',()=>{
                 console.log(rawlogBuffer);
                 const completeBuffer=Buffer.concat(rawlogBuffer);
                 const decodedStream=decodeDockerStream(completeBuffer);
                 console.log(decodedStream);
                 console.log(decodedStream.stdout);
-                res(decodeDockerStream)
+                res(decodedStream);
             });
         });
 
         await CppDockerContainer.remove();
+        return response;
 }
 
 export default runCpp;
