@@ -5,6 +5,9 @@ import { TestCases } from '../types/testCases';
 import { CPP_IMAGE } from '../utils/constant';
 import decodeDockerStream from './dockerHelper';
 import pullImage from './pullContainer';
+
+ //TODO:migrate to strategy pattern>> 
+
 async function runCpp(code:string,inputTestcase:string){
   
   const rawlogBuffer:any[]=[];

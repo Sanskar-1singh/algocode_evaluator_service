@@ -1,5 +1,6 @@
 export type SubmisisonPayload={
     code:string,
     language:string,
-    val:string,
+    inputCase: string,
+    outputCase: string
 }
