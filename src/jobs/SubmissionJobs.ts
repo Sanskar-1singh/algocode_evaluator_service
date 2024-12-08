@@ -8,7 +8,7 @@ import { ExecutionResponse } from "../types/CodeExecutorStrategy";
 
 export default class SubmissionJobs implements IJob{
         name:string;
-        payload?: Record<string, SubmisisonPayload>;
+        payload: Record<string, SubmisisonPayload>;
         constructor(payload:Record<string,SubmisisonPayload>){
             this.payload=payload;
             this.name=this.constructor.name;
@@ -16,14 +16,17 @@ export default class SubmissionJobs implements IJob{
         handle=async(job?:Job)=>{
             console.log("handler of job called");
             console.log(this.payload);
-            if(job && this.payload){
+            if(job){
                 const key=Object.keys(this.payload)[0];
                const codeLanguage=this.payload[key].language;
+               console.log(codeLanguage)
                const code=this.payload[key].code;
                const inputTestcase=this.payload[key].inputCase;
+               const outputTestCase=this.payload[key].outputCase;
                 const strategy=createExecutor(codeLanguage);
+                console.log(strategy);
                 if(strategy!=null){
-                    const response:ExecutionResponse=await strategy.execute(code,inputTestcase);
+                    const response:ExecutionResponse=await strategy.execute(code,inputTestcase,outputTestCase);
                     if(response.status=='completed'){
                         console.log("code executed successfully");
                         console.log(response);

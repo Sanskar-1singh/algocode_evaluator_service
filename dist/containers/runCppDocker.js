@@ -16,6 +16,7 @@ const containerFactory_1 = __importDefault(require("./containerFactory"));
 const constant_1 = require("../utils/constant");
 const dockerHelper_1 = __importDefault(require("./dockerHelper"));
 const pullContainer_1 = __importDefault(require("./pullContainer"));
+//TODO:migrate to strategy pattern>> 
 function runCpp(code, inputTestcase) {
     return __awaiter(this, void 0, void 0, function* () {
         const rawlogBuffer = [];

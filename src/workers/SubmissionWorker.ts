@@ -13,10 +13,11 @@ export default function SubmissionWorker(queuename:string){
            if(job.name==="SubmissionJobs"){
             const SubmisisonJobsinstances=new SubmisisonJobs(job.data);
             SubmisisonJobsinstances.handle(job);
+            return true;
            }
         },
         {
             connection:redisConnection
         }
-    )
+    );
 }

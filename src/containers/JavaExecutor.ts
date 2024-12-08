@@ -7,13 +7,13 @@ import decodeDockerStream from './dockerHelper';
 import pullImage from './pullContainer';
 import CodeExecutorStrategy, { ExecutionResponse } from '../types/CodeExecutorStrategy';
 class JavaExecutor implements CodeExecutorStrategy{
-   async  execute(code: string, inputTestcase: string): Promise<ExecutionResponse> {
+   async  execute(code: string, inputTestcase: string,outputCase:string): Promise<ExecutionResponse> {
         const rawlogBuffer:any[]=[];
         console.log('intialising docker container');
            //const JavaDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
           await pullImage(JAVA_IMAGE);
-           const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > Main.java && javac Main.java && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | java Main`;
-    
+          console.log(outputCase);
+          const runCommand = `echo '${code.replace(/'/g, `'\\"`)}' > Main.java && javac Main.java && echo '${inputTestcase.replace(/'/g, `'\\"`)}' | java Main`;
            const JavaDockerContainer=await createContainer(JAVA_IMAGE,[
             '/bin/sh',
             '-c',

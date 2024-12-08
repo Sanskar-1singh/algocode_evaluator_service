@@ -21,6 +21,7 @@ function SubmissionWorker(queuename) {
         if (job.name === "SubmissionJobs") {
             const SubmisisonJobsinstances = new SubmissionJobs_1.default(job.data);
             SubmisisonJobsinstances.handle(job);
+            return true;
         }
     }), {
         connection: redisConfig_1.default

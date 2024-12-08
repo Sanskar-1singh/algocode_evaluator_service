@@ -12,19 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const runCppDocker_1 = __importDefault(require("../containers/runCppDocker"));
+const ExecutorFactory_1 = __importDefault(require("../utils/ExecutorFactory"));
 class SubmissionJobs {
     constructor(payload) {
         this.handle = (job) => __awaiter(this, void 0, void 0, function* () {
             console.log("handler of job called");
             console.log(this.payload);
-            if (job && this.payload) {
-                const key = (parseInt)(Object.keys(this.payload)[0], 10);
-                console.log(this.payload);
-                console.log(this.payload[key].language);
-                if (this.payload[key].language == "CPP") {
-                    const response = yield (0, runCppDocker_1.default)(this.payload[key].code, this.payload[key].val);
-                    console.log("evaluated response is", response);
+            if (job) {
+                const key = Object.keys(this.payload)[0];
+                const codeLanguage = this.payload[key].language;
+                console.log(codeLanguage);
+                const code = this.payload[key].code;
+                const inputTestcase = this.payload[key].inputCase;
+                const outputTestCase = this.payload[key].outputCase;
+                const strategy = (0, ExecutorFactory_1.default)(codeLanguage);
+                console.log(strategy);
+                if (strategy != null) {
+                    const response = yield strategy.execute(code, inputTestcase, outputTestCase);
+                    if (response.status == 'completed') {
+                        console.log("code executed successfully");
+                        console.log(response);
+                    }
+                    else {
+                        console.log("something went wrong");
+                        console.log(response);
+                    }
                 }
             }
         });

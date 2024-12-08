@@ -8,11 +8,12 @@ import pullImage from './pullContainer';
 import CodeExecutorStrategy, { ExecutionResponse } from '../types/CodeExecutorStrategy';
 import { tryCatch } from 'bullmq';
 class PythonExecutor implements CodeExecutorStrategy{
-    async execute(code:string,inputTestcase:string):Promise<ExecutionResponse>{
+    async execute(code:string,inputTestcase:string,outputCase:string):Promise<ExecutionResponse>{
         const rawlogBuffer:any[]=[];
         console.log('intialising docker container');
            //const pythonDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
            await pullImage(PYTHON_IMAGE);
+           console.log(outputCase);
            const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > test.py && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | python3 test.py`;
     
            const pythonDockerContainer=await createContainer(PYTHON_IMAGE,[
@@ -47,9 +48,6 @@ class PythonExecutor implements CodeExecutorStrategy{
              }finally{ 
             await pythonDockerContainer.remove();
              }
-
-    
-            await pythonDockerContainer.remove();
             
     }
 
