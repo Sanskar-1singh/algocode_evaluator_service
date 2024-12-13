@@ -23,6 +23,9 @@ function createContainer(imagename, cmdExecutable) {
             AttachStdout: true, //te enable output stream
             AttachStderr: true, //to enable the error stream
             Tty: false,
+            HostConfig: {
+                Memory: 1024 * 1024 * 1024 //1GB
+            },
             OpenStdin: true, //keep the input stream open even when no interaction is open
         });
         return container;

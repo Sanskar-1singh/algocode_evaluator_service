@@ -52,22 +52,29 @@ class PythonExecutor implements CodeExecutorStrategy{
     }
 
     fetchdecodedStream(loggerStream:NodeJS.ReadableStream,rawlogBuffer:Buffer[]):Promise<string>{
-           return new Promise((res,rej)=>{
-            loggerStream.on('end',()=>{
-                console.log(rawlogBuffer);
-                const completeBuffer=Buffer.concat(rawlogBuffer);
-                const decodedStream=decodeDockerStream(completeBuffer);
-                console.log(decodedStream);
-                console.log(decodedStream.stdout);
-                  if(decodedStream.stderr){
-                    rej(decodedStream.stderr);
-                  }
-                  else{
-                    res(decodedStream.stdout);
-                  }
-            });
-        });
-    }
+      return new Promise((res,rej)=>{
+
+        const timeout=setTimeout(()=>{
+          console.log('timeout called');
+          rej('TLE');
+        },2000);
+       loggerStream.on('end',()=>{
+        //this callback execute when stream ends
+        clearTimeout(timeout);
+           console.log(rawlogBuffer);
+           const completeBuffer=Buffer.concat(rawlogBuffer);
+           const decodedStream=decodeDockerStream(completeBuffer);
+           console.log(decodedStream);
+           console.log(decodedStream.stdout);
+             if(decodedStream.stderr){
+               rej(decodedStream.stderr);
+             }
+             else{
+               res(decodedStream.stdout);
+             }
+       });
+   });
+}
 }
 
 

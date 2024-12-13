@@ -44,9 +44,18 @@ class JavaExecutor {
             });
             try {
                 const codeResponse = yield this.fetchdecodedStream(loggerStream, rawlogBuffer);
-                return { output: codeResponse, status: "completed" };
+                if (codeResponse.trim() === outputCase.trim()) {
+                    return { output: codeResponse, status: "SUCCESS" };
+                }
+                else {
+                    return { output: codeResponse, status: "WA" };
+                }
             }
             catch (error) {
+                console.log('error occured', error);
+                if (error === 'TLE') {
+                    yield JavaDockerContainer.kill();
+                }
                 return { output: error, status: "error" };
             }
             finally {
@@ -56,7 +65,13 @@ class JavaExecutor {
     }
     fetchdecodedStream(loggerStream, rawlogBuffer) {
         return new Promise((res, rej) => {
+            const timeout = setTimeout(() => {
+                console.log('timeout called');
+                rej('TLE');
+            }, 2000);
             loggerStream.on('end', () => {
+                //this callback execute when stream ends
+                clearTimeout(timeout);
                 console.log(rawlogBuffer);
                 const completeBuffer = Buffer.concat(rawlogBuffer);
                 const decodedStream = (0, dockerHelper_1.default)(completeBuffer);
