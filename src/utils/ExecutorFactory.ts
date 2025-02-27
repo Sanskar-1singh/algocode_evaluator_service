@@ -13,3 +13,8 @@ export default function createExecutor(codeLanguage:string):CodeExecutorStrategy
             return null;
         }
 }
+  // "build": "npx tsc",
+    // "watch": "npx tsc -w",
+    // "prestart": "npm run build",
+    // "start": "npx nodemon dist/index.js",
+    // "dev": "npx concurrently \"npm run watch\" \"npm start\""

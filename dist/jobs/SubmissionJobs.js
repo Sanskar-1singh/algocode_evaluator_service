@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ExecutorFactory_1 = __importDefault(require("../utils/ExecutorFactory"));
+const evaluationQueueproducer_1 = __importDefault(require("../producers/evaluationQueueproducer"));
 class SubmissionJobs {
     constructor(payload) {
         this.handle = (job) => __awaiter(this, void 0, void 0, function* () {
@@ -29,6 +30,7 @@ class SubmissionJobs {
                 console.log(strategy);
                 if (strategy != null) {
                     const response = yield strategy.execute(code, inputTestcase, outputTestCase);
+                    (0, evaluationQueueproducer_1.default)({ response, userId: this.payload[key].userId, submissionId: this.payload[key].submissionId });
                     if (response.status == 'SUCCESS') {
                         console.log("code executed successfully");
                         console.log(response);

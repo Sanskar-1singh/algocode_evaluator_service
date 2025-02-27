@@ -5,7 +5,7 @@ import { SubmisisonPayload } from "../types/SubmisisonPayload";
 import runCpp from "../containers/runCppDocker";
 import createExecutor from "../utils/ExecutorFactory";
 import { ExecutionResponse } from "../types/CodeExecutorStrategy";
-
+import evaluationQueueproducer from "../producers/evaluationQueueproducer";
 export default class SubmissionJobs implements IJob{
         name:string;
         payload: Record<string, SubmisisonPayload>;
@@ -27,6 +27,7 @@ export default class SubmissionJobs implements IJob{
                 console.log(strategy);
                 if(strategy!=null){
                     const response:ExecutionResponse=await strategy.execute(code,inputTestcase,outputTestCase);
+                    evaluationQueueproducer({response,userId:this.payload[key].userId,submissionId:this.payload[key].submissionId});
                     if(response.status=='SUCCESS'){
                         console.log("code executed successfully");
                         console.log(response);

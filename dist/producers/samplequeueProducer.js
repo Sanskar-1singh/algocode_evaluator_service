@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = default_1;
+exports.default = samplequeueProducer;
 const samplequeue_1 = __importDefault(require("../queues/samplequeue"));
-function default_1(name, payload, priority) {
+function samplequeueProducer(name, payload, priority) {
     return __awaiter(this, void 0, void 0, function* () {
         yield samplequeue_1.default.add(name, payload, { priority });
         console.log("successfully added a new job");

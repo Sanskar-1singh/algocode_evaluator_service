@@ -56,7 +56,13 @@ class PythonExecutor {
     }
     fetchdecodedStream(loggerStream, rawlogBuffer) {
         return new Promise((res, rej) => {
+            const timeout = setTimeout(() => {
+                console.log('timeout called');
+                rej('TLE');
+            }, 2000);
             loggerStream.on('end', () => {
+                //this callback execute when stream ends
+                clearTimeout(timeout);
                 console.log(rawlogBuffer);
                 const completeBuffer = Buffer.concat(rawlogBuffer);
                 const decodedStream = (0, dockerHelper_1.default)(completeBuffer);

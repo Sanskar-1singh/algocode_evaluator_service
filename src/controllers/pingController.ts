@@ -2,7 +2,7 @@
 import { Request, Response,NextFunction } from 'express';
 
 export const pingCheck = (__: Request, res: Response, _: NextFunction)=> {
-    res.json({ message: "OK DONE" });
+     res.json({ message: "OK DONE" });
 };
 
 
