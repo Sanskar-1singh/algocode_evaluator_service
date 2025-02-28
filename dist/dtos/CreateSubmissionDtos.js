@@ -8,4 +8,4 @@ exports.createSubmmissionZodSchema = zod_1.z.object({
     problemId: zod_1.z.string(),
     code: zod_1.z.string(),
     language: zod_1.z.string()
-}).strict();
+}).strict(); //here it will not allow extra properties in req.body it will throw error

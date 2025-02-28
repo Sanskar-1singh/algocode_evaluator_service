@@ -13,5 +13,5 @@ export const createSubmmissionZodSchema=z.object({
       code:z.string(),
       language:z.string() 
 
-}).strict();
+}).strict();//here it will not allow extra properties in req.body it will throw error
 

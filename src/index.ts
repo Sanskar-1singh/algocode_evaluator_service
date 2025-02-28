@@ -10,9 +10,7 @@ import SubmissionWorker from './workers/SubmissionWorker';
 import { submission_queue } from './utils/constant';
 import SubmissionQueueProducers from './producers/SubmissionQueueProducers';
 import samplequeueProducer from './producers/samplequeueProducer';
-import {BullMQAdapter} from '@bull-board/api/bullMQAdapter';//to communicate  with bullMQ>>
-import {ExpressAdapter} from '@bull-board/express';//to communicate with express>>
-import {createBullBoard} from '@bull-board/api';
+import serverAdapter from './config/bull-board.config';
 import sampleQueue from './queues/samplequeue';
 
 const app = express();
@@ -22,14 +20,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 
 app.use('/api', apiRouter);
-
-const serverAdapter=new ExpressAdapter();
-serverAdapter.setBasePath('/ui');
-createBullBoard({
-queues:[new BullMQAdapter(sampleQueue)],serverAdapter,
-});
-
 app.use('/ui',serverAdapter.getRouter());
+
 app.listen(serverConfig.PORT, () => {
     console.log(`Server started at port ${serverConfig.PORT}`);
     console.log(`bull board is running at ${serverConfig.PORT}/ui`);

@@ -1,7 +1,8 @@
-import { ZodSchema } from 'zod';
+import { z } from 'zod';
 import { CreateSubmissionDto } from '../dtos/CreateSubmissionDtos';
 import { NextFunction,Request,Response } from 'express';
-export const validate=(schema:ZodSchema<any>)=>(req:Request,res:Response,next:NextFunction) => {
+export const validate=(schema:z.ZodType <any>)=>{
+    return (req:Request,res:Response,next:NextFunction) => {//why we have return the function????
         try {
             schema.parse({
                 ...req.body,
@@ -16,4 +17,5 @@ export const validate=(schema:ZodSchema<any>)=>(req:Request,res:Response,next:Ne
                 error:error
             });
         }
+    }
 };
