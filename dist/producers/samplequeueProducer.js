@@ -16,7 +16,7 @@ exports.default = samplequeueProducer;
 const samplequeue_1 = __importDefault(require("../queues/samplequeue"));
 function samplequeueProducer(name, payload, priority) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield samplequeue_1.default.add(name, payload, { priority });
+        yield samplequeue_1.default.add(name, payload, { priority: priority });
         console.log("successfully added a new job");
     });
 }

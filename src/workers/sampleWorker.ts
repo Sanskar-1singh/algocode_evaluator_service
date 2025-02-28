@@ -11,7 +11,7 @@ export default function SampleWorker(queuename: string) {
   const ___ = new Worker(
     queuename,
     async (job: Job) => {
-        console.log(job);
+      //  console.log(job);
       if (job.name === "sampleJobs") {//we always add task to do in queue as JOBS>>>
         const samplejobinstances = new sampleJobs(job.data);
         samplejobinstances.handle(job);

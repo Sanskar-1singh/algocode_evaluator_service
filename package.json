@@ -14,6 +14,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@bull-board/express": "^6.7.10",
     "@types/dockerode": "^3.3.31",
     "@types/dotenv": "^6.1.1",
     "@types/ioredis": "^4.28.10",

@@ -19,7 +19,7 @@ const redisConfig_1 = __importDefault(require("../config/redisConfig"));
 function SampleWorker(queuename) {
     console.log('worker');
     const ___ = new bullmq_1.Worker(queuename, (job) => __awaiter(this, void 0, void 0, function* () {
-        console.log(job);
+        //  console.log(job);
         if (job.name === "sampleJobs") { //we always add task to do in queue as JOBS>>>
             const samplejobinstances = new sampleJobs_1.default(job.data);
             samplejobinstances.handle(job);
