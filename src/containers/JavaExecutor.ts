@@ -66,7 +66,7 @@ class JavaExecutor implements CodeExecutorStrategy{
                  console.log(rawlogBuffer);
                  const completeBuffer=Buffer.concat(rawlogBuffer);
                  const decodedStream=decodeDockerStream(completeBuffer);
-                 console.log(decodedStream);
+                // console.log(decodedStream);
                  console.log(decodedStream.stdout);
                    if(decodedStream.stderr){
                      rej(decodedStream.stderr);

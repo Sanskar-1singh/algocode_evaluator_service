@@ -12,6 +12,7 @@ import SubmissionQueueProducers from './producers/SubmissionQueueProducers';
 import samplequeueProducer from './producers/samplequeueProducer';
 import serverAdapter from './config/bull-board.config';
 import sampleQueue from './queues/samplequeue';
+import submissionQueueProducers from './producers/SubmissionQueueProducers';
 
 const app = express();
 
@@ -25,14 +26,63 @@ app.use('/ui',serverAdapter.getRouter());
 app.listen(serverConfig.PORT, () => {
     console.log(`Server started at port ${serverConfig.PORT}`);
     console.log(`bull board is running at ${serverConfig.PORT}/ui`);
-  // SubmissionWorker(submission_queue);
-   SampleWorker('samplequeue');
-    samplequeueProducer('sampleJobs',{name:'sanskar 10'},10);
-    samplequeueProducer('sampleJobs',{name:'sanskar 900'},900);
-    samplequeueProducer('sampleJobs',{name:'sanskar 700'},700);
-    samplequeueProducer('sampleJobs',{name:'sanskar 500'},500);
-    samplequeueProducer('sampleJobs',{name:'sanskar 8'},8);
-    samplequeueProducer('sampleJobs',{name:'sanskar 20'},20);
-    samplequeueProducer('sampleJobs',{name:'sanskar singh 1'},1);
-    samplequeueProducer('sampleJobs',{name:'sanskar 7'},7);
+    //  const code=`
+    //  #include<bits/stdc++.h>
+    //  using namespace std;
+
+    //  int main(){
+    //    int a;
+    //    int b;
+    //    int c,d,e,f,g;
+    //    cin>>a;
+    //    cin>>b;
+    //    cin>>c;
+    //    cin>>d;
+    //    cin>>f;
+    //    cin>>g;
+    //    cout<<a+b+c+d+e+f+g<<" "; 
+      
+    //    for(int i=0;i<10;i++){
+    //        cout<<i<<" ";
+    //    }
+    //  }
+    //  `
+    //  const test=`
+    //  10
+    //  20
+    //  30
+    //  40
+    //  50
+    //  60
+    //  70
+    //  `
+      SubmissionWorker('SubmissionQueue');  
+    //  submissionQueueProducers({'data':{
+    //   language:'cpp',
+    //    code:code,
+    //    userId:'1',
+    //    inputCase:'1',
+    //    outputCase:'1',
+    //    submissionId:'1'
+    //    },
+    //     'two':{
+    //       language:'cpp',
+    //       code:code,
+    //       userId:'1',
+    //       inputCase:'1',
+    //       outputCase:'2',
+    //       submissionId:'2'
+    //     }
+    //   });
+    // runCpp(code,test);
 });
+
+/**
+ * {
+    "userId": "123456",
+    "problemId": "675087dbae0ec274a91bed16",
+    "code": "class Solution {\n    int missingNumber(int n) {\n        return n*n;    }\n}",
+    "language": "java"
+}
+
+ */

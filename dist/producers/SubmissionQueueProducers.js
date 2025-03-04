@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = default_1;
+exports.default = submissionQueueProducers;
 const SubmissionQueue_1 = __importDefault(require("../queues/SubmissionQueue"));
-function default_1(payload) {
+function submissionQueueProducers(payload) {
     return __awaiter(this, void 0, void 0, function* () {
         yield SubmissionQueue_1.default.add("SubmissionJobs", payload);
         console.log("successfully added a new job");

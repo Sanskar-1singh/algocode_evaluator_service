@@ -1,7 +1,7 @@
 import Submissionqueue from "../queues/SubmissionQueue";
-import { SubmisisonPayload } from "../types/SubmisisonPayload";
+import  SubmisisonPayload  from "../types/SubmisisonPayload";
 
-export default async  function(payload:Record<string,SubmisisonPayload>){
+export default async  function submissionQueueProducers(payload:Record<string,SubmisisonPayload>){
     await Submissionqueue.add("SubmissionJobs",payload);
     console.log("successfully added a new job");
 }

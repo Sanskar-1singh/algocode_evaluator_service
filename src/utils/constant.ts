@@ -6,5 +6,5 @@ export const submission_queue="SubmissionQueue";
 //this will represent the header sizze of docker stream
 //docker stream header will contain data about type of  stream i.e. stdout/stderr??
 //and length of data>>
-export const HEADER_SIZE=8;
+export const HEADER_SIZE=8;//in bytes
 

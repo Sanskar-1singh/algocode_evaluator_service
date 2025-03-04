@@ -75,7 +75,7 @@ class JavaExecutor {
                 console.log(rawlogBuffer);
                 const completeBuffer = Buffer.concat(rawlogBuffer);
                 const decodedStream = (0, dockerHelper_1.default)(completeBuffer);
-                console.log(decodedStream);
+                // console.log(decodedStream);
                 console.log(decodedStream.stdout);
                 if (decodedStream.stderr) {
                     rej(decodedStream.stderr);

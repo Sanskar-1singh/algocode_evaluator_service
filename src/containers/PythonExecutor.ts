@@ -9,7 +9,7 @@ import CodeExecutorStrategy, { ExecutionResponse } from '../types/CodeExecutorSt
 import { tryCatch } from 'bullmq';
 class PythonExecutor implements CodeExecutorStrategy{
     async execute(code:string,inputTestcase:string,outputCase:string):Promise<ExecutionResponse>{
-        const rawlogBuffer:any[]=[];
+        const rawlogBuffer:Buffer[]=[];
         console.log('intialising docker container');
            //const pythonDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
            await pullImage(PYTHON_IMAGE);
@@ -62,7 +62,8 @@ class PythonExecutor implements CodeExecutorStrategy{
         //this callback execute when stream ends
         clearTimeout(timeout);
            console.log(rawlogBuffer);
-           const completeBuffer=Buffer.concat(rawlogBuffer);
+           const completeBuffer=Buffer.concat(rawlogBuffer);//this is used to convert whole rawlogbuffer array into complete single buffer object>>
+           
            const decodedStream=decodeDockerStream(completeBuffer);
            console.log(decodedStream);
            console.log(decodedStream.stdout);

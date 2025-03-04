@@ -14,7 +14,7 @@ async function runCpp(code:string,inputTestcase:string){
     console.log('intialising docker container');
        //const JavaDockerContainer=await createContainer(PYTHON_IMAGE,['python3','-c',code,'stty -echo']);
          await pullImage(CPP_IMAGE);
-       const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > main.cpp  && g++ main.cpp -o main && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | stdbuf -oL -eL ./main`;
+       const runCommand = `echo '${code.replace(/'/g, `'"'"'`)}' > main.cpp  && g++ main.cpp -o main && echo '${inputTestcase.replace(/'/g, `'"'"'`)}' | ./main`;
 
        const CppDockerContainer=await createContainer(CPP_IMAGE,[
         '/bin/sh',

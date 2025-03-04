@@ -64,7 +64,7 @@ class PythonExecutor {
                 //this callback execute when stream ends
                 clearTimeout(timeout);
                 console.log(rawlogBuffer);
-                const completeBuffer = Buffer.concat(rawlogBuffer);
+                const completeBuffer = Buffer.concat(rawlogBuffer); //this is used to convert whole rawlogbuffer array into complete single buffer object>>
                 const decodedStream = (0, dockerHelper_1.default)(completeBuffer);
                 console.log(decodedStream);
                 console.log(decodedStream.stdout);

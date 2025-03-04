@@ -22,12 +22,13 @@ class SubmissionJobs {
             if (job) {
                 const key = Object.keys(this.payload)[0];
                 const codeLanguage = this.payload[key].language;
+                console.log(key);
                 console.log(codeLanguage);
                 const code = this.payload[key].code;
                 const inputTestcase = this.payload[key].inputCase;
                 const outputTestCase = this.payload[key].outputCase;
                 const strategy = (0, ExecutorFactory_1.default)(codeLanguage);
-                console.log(strategy);
+                console.log('strategy', strategy);
                 if (strategy != null) {
                     const response = yield strategy.execute(code, inputTestcase, outputTestCase);
                     (0, evaluationQueueproducer_1.default)({ response, userId: this.payload[key].userId, submissionId: this.payload[key].submissionId });
@@ -39,6 +40,9 @@ class SubmissionJobs {
                         console.log("something went wrong");
                         console.log(response);
                     }
+                }
+                else {
+                    console.log('something went wrong');
                 }
             }
         });
