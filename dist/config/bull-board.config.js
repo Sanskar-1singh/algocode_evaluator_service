@@ -8,11 +8,12 @@ const express_1 = require("@bull-board/express"); //to communicate with express>
 const api_1 = require("@bull-board/api");
 const samplequeue_1 = __importDefault(require("../queues/samplequeue"));
 const SubmissionQueue_1 = __importDefault(require("../queues/SubmissionQueue"));
+const evaluationQueue_1 = __importDefault(require("../queues/evaluationQueue"));
 const serverAdapter = new express_1.ExpressAdapter();
 serverAdapter.setBasePath('/ui');
 (0, api_1.createBullBoard)({
     queues: [new bullMQAdapter_1.BullMQAdapter(samplequeue_1.default),
-        new bullMQAdapter_1.BullMQAdapter(SubmissionQueue_1.default)],
+        new bullMQAdapter_1.BullMQAdapter(SubmissionQueue_1.default), new bullMQAdapter_1.BullMQAdapter(evaluationQueue_1.default)],
     serverAdapter,
 });
 exports.default = serverAdapter;
